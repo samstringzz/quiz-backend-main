@@ -11,7 +11,8 @@
     "postinstall": "tsc",
     "init-db": "ts-node src/scripts/init-db.ts",
     "db:setup": "npm run build && node dist/scripts/init-db.js",
-    "generate-secret": "ts-node src/scripts/generate-secret.ts"
+    "generate-secret": "ts-node src/scripts/generate-secret.ts",
+    "test-db": "ts-node src/scripts/test-connection.ts"
   },
   "keywords": [],
   "author": "",
