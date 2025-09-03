@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: quiz-backend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /test
+    autoDeploy: true
