@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { body, validationResult } from 'express-validator';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import pool from '../utils/db';
@@ -6,7 +6,7 @@ import pool from '../utils/db';
 export const quizRouter = Router();
 
 // Start quiz
-quizRouter.get('/start', authenticateToken, async (req: AuthRequest, res, next) => {
+quizRouter.get('/start', authenticateToken, async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     // Get all questions with only necessary fields
     const result = await pool.query(
@@ -36,7 +36,7 @@ quizRouter.post('/submit', authenticateToken, [
   body('answers').isArray(),
   body('answers.*.question_id').isInt(),
   body('answers.*.selected_option').isInt({ min: 1, max: 4 }),
-], async (req: AuthRequest, res, next) => {
+], async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
