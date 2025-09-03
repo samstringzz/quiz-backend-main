@@ -12,22 +12,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// CORS middleware
-app.use((req, res, next) => {
-  const corsOrigin = process.env.CORS_ORIGIN || 'https://quiz-frontend-t6vn.vercel.app';
-  res.header('Access-Control-Allow-Origin', corsOrigin);
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept');
-  res.header('Access-Control-Allow-Credentials', 'true');
+// CORS configuration
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || 'https://quiz-frontend-t6vn.vercel.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+};
 
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  next();
-});
-
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Test routes to verify API is working
